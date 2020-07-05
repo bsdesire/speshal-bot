@@ -5,6 +5,7 @@
     "main": "bot.js",
     "author": "Carlos P.",
     "dependencies": {
+        "canvas": "^2.6.1",
         "discord.js": "^12.2.0",
         "enmap": "^5.3.1",
         "jquery": "^3.5.1",

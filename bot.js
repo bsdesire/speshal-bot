@@ -22,8 +22,8 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  if (msg.content === 'ping') {
-    msg.reply('Pong!');
+  if (msg.content.toLowerCase().includes("speshal kiss")) {
+    client.commands.get('kith').executeAnyways(msg);
   }
 });
 
@@ -43,7 +43,9 @@ client.on("message", (message) => {
           client.commands.get('color').execute(message, args);
       }else if(args[1].toLowerCase() === 'help'){
           client.commands.get('help').execute(message, args);
-      }else{
+      }else if(args[1].toLowerCase() === 'kith'){
+        client.commands.get('kith').execute(message, args);
+    }else{
         message.channel.send("`Did you type the command correctly? Type '!speshal help' for more info.`");
       }
   }
