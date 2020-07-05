@@ -1,0 +1,13 @@
+{
+    "name": "SpeshalColor",
+    "version": "1.0.0",
+    "description": "A color picker bot. By @desire",
+    "main": "bot.js",
+    "author": "Carlos P.",
+    "dependencies": {
+        "discord.js": "^12.2.0",
+        "enmap": "^5.3.1",
+        "jquery": "^3.5.1",
+        "jsdom": "^16.2.2"
+    }
+}
