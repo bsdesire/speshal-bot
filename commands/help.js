@@ -12,6 +12,7 @@ module.exports = {
                 .setThumbnail('https://i.imgur.com/z6pRGtP.png')
                 .addFields(
                     { name: 'Actual Commands!', value: 'Color Picker! Type `!speshal color help`' },
+                    { name: 'Open Source (GitHub)', value: 'This is an open source bot. Feel free to fork the repo. https://github.com/bsdesire/speshal-bot' },
                     { name: 'Where do we go from here?', value: 'More commands to come...' },
                 )
                 .setTimestamp()

@@ -3,6 +3,7 @@ module.exports = {
 	name: 'color',
 	description: 'Change my color!',
 	execute(message, args) {
+        if(args[2]!=undefined){
         // Checks for keyword 'help'.
         if(args[2].toLowerCase() === 'help'){
             const exampleEmbed = new Discord.MessageEmbed()
@@ -53,5 +54,8 @@ module.exports = {
             })
                 .then(newRole => message.member.roles.add(newRole)) // Adds the user to the role.
                 .catch(console.error);
+    }}else{
+        message.channel.send("`Did you type the command correctly? Type '!speshal color help' for more info.`");
+        return;
     }},
 };

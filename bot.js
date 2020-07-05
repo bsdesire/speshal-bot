@@ -18,6 +18,7 @@ for (const file of commandFiles) {
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  client.user.setActivity("Type !speshal help");
 });
 
 client.on('message', msg => {
@@ -37,11 +38,14 @@ client.on("message", (message) => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).split(/\s+/);
-
-	if (args[1].toLowerCase() === 'color') {
-        client.commands.get('color').execute(message, args);
-    }else if(args[1].toLowerCase() === 'help'){
-        client.commands.get('help').execute(message, args);
-    }
+  if(args[1]!=undefined){
+    if (args[1].toLowerCase() === 'color') {
+          client.commands.get('color').execute(message, args);
+      }else if(args[1].toLowerCase() === 'help'){
+          client.commands.get('help').execute(message, args);
+      }else{
+        message.channel.send("`Did you type the command correctly? Type '!speshal help' for more info.`");
+      }
+  }
 });
 
