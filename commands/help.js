@@ -11,7 +11,8 @@ module.exports = {
                 .setDescription('Just another discord bot.')
                 .setThumbnail('https://i.imgur.com/z6pRGtP.png')
                 .addFields(
-                    { name: 'Actual Commands!', value: 'Color Picker! Type `!speshal color help`' },
+                    { name: 'Color Picker!', value: 'Color Picker! Type `!speshal color help`' },
+                    { name: 'Speshal Kisses!', value: 'Kisses for everyone! Type `!speshal kith @someone`' },
                     { name: 'Open Source (GitHub)', value: 'This is an open source bot. Feel free to fork the repo. https://github.com/bsdesire/speshal-bot' },
                     { name: 'Where do we go from here?', value: 'More commands to come...' },
                 )

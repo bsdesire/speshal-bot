@@ -22,7 +22,7 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  if (msg.content.toLowerCase().includes("speshal kiss")) {
+  if (msg.content.toLowerCase().includes("spesssshhhhhal kiss")) {
     client.commands.get('kith').executeAnyways(msg);
   }
 });
