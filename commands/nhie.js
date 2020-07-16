@@ -1,24 +1,24 @@
 const Discord = require("discord.js");
 var fs = require("fs");
-global.countDrinks = []; // Saves all the users ID's for when people drink.
-global.playersPlaying = [];
+
 //var isItRunning = true;
 module.exports = {
   name: "nhie",
   description: "Never have I ever...",
-  execute(message, lines, args) {
+  execute(message, lines, guild, args) {
     let nquestions = 0;
-
+    console.log(guild);
     var listOfAnswered = [];
     // Check how many questions to play.
     if (args[2] == "stop") {
-      if(global.gameIsRunning){
-      global.gameIsRunning = false;
+      console.log(guild);
+      if(global.gameIsRunning[guild]==true){
+      global.gameIsRunning[guild] = false;
       clearInterval(timeout);
-      showScoreboard(global.playersPlaying, global.countDrinks, message);
+      showScoreboard(global.playersPlaying[guild], global.countDrinks[guild], message, guild);
       message.channel.send("Game was stopped by " + message.author.name);
-      global.countDrinks = []; // Saves all the users ID's for when people drink.
-      global.playersPlaying = [];
+      global.countDrinks[guild] = []; // Saves all the users ID's for when people drink.
+      global.playersPlaying[guild] = [];
       return;
       }
     }
@@ -35,8 +35,8 @@ module.exports = {
       return;
     }
     // Sends the start message
-    global.gameIsRunning = true;
-    console.log(global.gameIsRunning);
+    global.gameIsRunning[guild] = true;
+    console.log(global.gameIsRunning[guild]);
     const gameStart = new Discord.MessageEmbed()
       .setColor("#FF0000")
       .setDescription(
@@ -62,7 +62,7 @@ module.exports = {
     var i = 1;
 
     timeout = setTimeout(function newQuestion() {
-      if(global.gameIsRunning){
+      if(global.gameIsRunning[guild]){
       let question = lines[Math.floor(Math.random() * lines.length)];
       while (listOfAnswered.includes(question)) {
         question = lines[Math.floor(Math.random() * lines.length)];
@@ -99,17 +99,17 @@ module.exports = {
           ) {
             drinking += "<@" + user.id + ">" + "\n";
             alreadyReacted.push(user.id);
-            global.countDrinks.push(user.id);
-            if (!playersPlaying.includes(user.id)) {
+            global.countDrinks[guild].push(user.id);
+            if (!global.playersPlaying[guild].some(user => user.ID === user.id)) {
               // This is only executed if the user.id isn't in playersPlaying.
-              playersPlaying.push(user.id);
+              global.playersPlaying[guild].push(user.id);
             }
           } else if (!alreadyReacted.includes(user.id)) {
             notdrinking += "<@" + user.id + ">" + "\n";
             alreadyReacted.push(user.id);
-            if (!playersPlaying.includes(user.id)) {
+            if (!global.playersPlaying[guild].some(user => user.ID === user.id)) {
               // This is only executed if the user.id isn't in playersPlaying.
-              playersPlaying.push(user.id);
+              global.playersPlaying[guild].push(user.id);
             }
           }
         });
@@ -138,14 +138,14 @@ module.exports = {
       if (i == nquestions) {
         // Figuring out who drank more times and who drank less.
         setTimeout(function () {
-          showScoreboard(global.playersPlaying, global.countDrinks, message);
-          global.countDrinks = []; // Reset the counter.
-          global.playersPlaying = [];
+          showScoreboard(global.playersPlaying[guild], global.countDrinks[guild], message);
+          global.countDrinks[guild] = []; // Reset the counter.
+          global.playersPlaying[guild] = [];
         }, 40000);
         return;
       }
 
-      if (global.gameIsRunning) {
+      if (global.gameIsRunning[guild]) {
         // Increases question number.
         i++;
         setTimeout(newQuestion, 60000);
@@ -173,7 +173,7 @@ function isNumber(n) {
   return Number(n) === n;
 }
 
-function showScoreboard(playersPlaying, countDrinks, message) {
+function showScoreboard(playersPlaying, countDrinks, message, guild) {
   let leaderboard = [];
 
   playersPlaying.forEach(function (player) {
@@ -223,5 +223,5 @@ function showScoreboard(playersPlaying, countDrinks, message) {
         leaderboardString
     );
   message.channel.send({ embed: endGameEmbed });
-  global.gameIsRunning = false; // Scoreboard means game is over.
+  global.gameIsRunning[guild] = false; // Scoreboard means game is over.
 }

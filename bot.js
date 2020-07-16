@@ -4,7 +4,11 @@ var auth = require('./auth.json')
 const Enmap = require("enmap");
 const client = new Discord.Client();
 
-global.gameIsRunning = false;
+// NHIE STUFF
+global.gameIsRunning = {};
+global.countDrinks = {};
+global.playersPlaying = {};
+
 
 client.commands = new Discord.Collection();
 
@@ -21,11 +25,26 @@ let randomNHIE = client.commands.get('nhie').readLinesFromFile('./content/nhie.t
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   client.user.setActivity("Type !speshal help");
+
+  var allGuilds = client.guilds.cache;
+    //initialize all prefixes to a default prefix
+    allGuilds.forEach(function(guild){
+      // NHIE
+      //console.log(guild);
+        global.gameIsRunning[guild.id] = false; 
+        global.countDrinks[guild.id] = [];
+        
+        global.playersPlaying[guild.id] = [];
+        
+      // NHIE
+    });
 });
 
 client.on('message', msg => {
-  if (msg.content.toLowerCase().includes("speshal kiss")) {
-    msg.react('726601173108261135'); 
+  if (msg.content.toLowerCase().includes("!oop")) {
+    console.log(global.countDrinks);
+    console.log(global.playersPlaying);
+    console.log(global.gameIsRunning);
   }
 });
 
@@ -46,7 +65,7 @@ client.on("message", (message) => {
         }else if(args[1].toLowerCase() === 'help'){
           client.commands.get('help').execute(message, args);
         }else if(args[1].toLowerCase() === 'nhie'){
-          client.commands.get('nhie').execute(message, randomNHIE, args); // The entire array created at the start.
+          client.commands.get('nhie').execute(message, randomNHIE, message.guild.id, args); // The entire array created at the start.
       }else if(args[1].toLowerCase() === 'kith' || args[1].toLowerCase() === 'kiss'){
         client.commands.get('kith').execute(message, args);
     }else{

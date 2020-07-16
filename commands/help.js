@@ -13,6 +13,7 @@ module.exports = {
                 .addFields(
                     { name: 'Color Picker!', value: 'Color Picker! Type `!speshal color help`' },
                     { name: 'Speshal Kisses!', value: 'Kisses for everyone! Type `!speshal kith @someone`' },
+                    { name: 'Never have I ever!', value: 'A discord drinking game! Type `!speshal nhie (no. of questions)`' },
                     { name: 'Open Source (GitHub)', value: 'This is an open source bot. Feel free to fork the repo. https://github.com/bsdesire/speshal-bot' },
                     { name: 'Where do we go from here?', value: 'More commands to come...' },
                 )
