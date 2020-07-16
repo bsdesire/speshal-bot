@@ -5,6 +5,7 @@
     "main": "bot.js",
     "author": "Carlos P.",
     "dependencies": {
+        "better-sqlite3": "^7.1.0",
         "canvas": "^2.6.1",
         "discord.js": "^12.2.0",
         "enmap": "^5.3.1",

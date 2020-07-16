@@ -4,7 +4,7 @@ var auth = require('./auth.json')
 const Enmap = require("enmap");
 const client = new Discord.Client();
 
-
+global.gameIsRunning = false;
 
 client.commands = new Discord.Collection();
 
@@ -16,14 +16,16 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
+let randomNHIE = client.commands.get('nhie').readLinesFromFile('./content/nhie.txt');
+
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   client.user.setActivity("Type !speshal help");
 });
 
 client.on('message', msg => {
-  if (msg.content.toLowerCase().includes("spesssshhhhhal kiss")) {
-    client.commands.get('kith').executeAnyways(msg);
+  if (msg.content.toLowerCase().includes("speshal kiss")) {
+    msg.react('726601173108261135'); 
   }
 });
 
@@ -41,11 +43,14 @@ client.on("message", (message) => {
   if(args[1]!=undefined){
     if (args[1].toLowerCase() === 'color') {
           client.commands.get('color').execute(message, args);
-      }else if(args[1].toLowerCase() === 'help'){
+        }else if(args[1].toLowerCase() === 'help'){
           client.commands.get('help').execute(message, args);
-      }else if(args[1].toLowerCase() === 'kith'){
+        }else if(args[1].toLowerCase() === 'nhie'){
+          client.commands.get('nhie').execute(message, randomNHIE, args); // The entire array created at the start.
+      }else if(args[1].toLowerCase() === 'kith' || args[1].toLowerCase() === 'kiss'){
         client.commands.get('kith').execute(message, args);
     }else{
+        message.react('❌');
         message.channel.send("`Did you type the command correctly? Type '!speshal help' for more info.`");
       }
   }

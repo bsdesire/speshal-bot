@@ -29,6 +29,7 @@ module.exports = {
         var res = regexPat.test(args[2]);
         if(!res){
             // If the color is not in hexadecimal or wrong do this:
+            message.react('❌');
             message.channel.send("`Specified color ("+args[2]+") is possibly wrong, expected in hex value, eg: #ABC123 or #222FFF. Type '!speshal color help' for more.`");
             return;
         }
@@ -37,24 +38,27 @@ module.exports = {
         if(message.guild.roles.cache.find(role => role.name === userName) != undefined){
             // If the user does have a role already, sets the new color.
             message.channel.send("`Changing " + message.author.username + "'s color to " + args[2] + "`");
+            message.react('✅');
             message.guild.roles.cache.find(role => role.name === userName).setColor(args[2]).catch(console.error);
-            message.member.roles.add(userName);
+            message.member.roles.add(message.guild.roles.cache.find(role => role.name === userName)).catch(console.error);
             return;
         }else{
             // If the user doesn't have a role yet, creates a role with his id as role name.
             message.channel.send('`Setting ' + message.author.username + "'s color to " + args[2] + "`");
+            message.react('✅');
             console.log(message.guild.roles.highest.position);
             message.guild.roles.create({
                 data: {
                 name: message.author.id,
                 color: parseInt(args[2].replace("#","0x"),16),
-                position: message.guild.roles.highest.position-4,
+                position: message.guild.me.roles.highest.position,
                 },
                 reason: 'Someone requested this',
             })
                 .then(newRole => message.member.roles.add(newRole)) // Adds the user to the role.
                 .catch(console.error);
     }}else{
+        message.react('❌');
         message.channel.send("`Did you type the command correctly? Type '!speshal color help' for more info.`");
         return;
     }},
