@@ -12,12 +12,15 @@ module.exports = {
     var listOfAnswered = [];
     // Check how many questions to play.
     if (args[2] == "stop") {
+      if(global.gameIsRunning){
       global.gameIsRunning = false;
       clearInterval(timeout);
       showScoreboard(global.playersPlaying, global.countDrinks, message);
+      message.channel.send("Game was stopped by " + message.author.name);
       global.countDrinks = []; // Saves all the users ID's for when people drink.
       global.playersPlaying = [];
       return;
+      }
     }
     if (args[2] == undefined) {
       nquestions = 10;
@@ -59,6 +62,7 @@ module.exports = {
     var i = 1;
 
     timeout = setTimeout(function newQuestion() {
+      if(global.gameIsRunning){
       let question = lines[Math.floor(Math.random() * lines.length)];
       while (listOfAnswered.includes(question)) {
         question = lines[Math.floor(Math.random() * lines.length)];
@@ -125,9 +129,11 @@ module.exports = {
                 "\n\n\n🔜 Get ready for another question!"
             );
           message.channel.send({ embed: sentenceEmbed });
+        
         });
+        
       });
-
+    }
       // New question every minute.
       if (i == nquestions) {
         // Figuring out who drank more times and who drank less.
