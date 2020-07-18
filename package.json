@@ -7,8 +7,10 @@
     "dependencies": {
         "better-sqlite3": "^7.1.0",
         "canvas": "^2.6.1",
+        "canvas-gif-encoder": "^0.1.2",
         "discord.js": "^12.2.0",
         "enmap": "^5.3.1",
+        "gifler": "^0.1.0",
         "jquery": "^3.5.1",
         "jsdom": "^16.2.2"
     }

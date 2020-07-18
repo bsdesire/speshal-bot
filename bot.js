@@ -10,6 +10,18 @@ global.countDrinks = {};
 global.playersPlaying = {};
 
 
+// CANVAS STUFF
+/* global.patgif = [await Canvas.loadImage('./images/pat/frame_0.gif'),
+await Canvas.loadImage('./images/pat/frame_1.gif'),
+await Canvas.loadImage('./images/pat/frame_2.gif'),
+await Canvas.loadImage('./images/pat/frame_3.gif'),
+await Canvas.loadImage('./images/pat/frame_4.gif'),
+await Canvas.loadImage('./images/pat/frame_5.gif'),
+await Canvas.loadImage('./images/pat/frame_6.gif'),
+await Canvas.loadImage('./images/pat/frame_7.gif'),
+await Canvas.loadImage('./images/pat/frame_8.gif'),
+]; */
+
 client.commands = new Discord.Collection();
 
 
@@ -66,8 +78,10 @@ client.on("message", (message) => {
           client.commands.get('help').execute(message, args);
         }else if(args[1].toLowerCase() === 'nhie'){
           client.commands.get('nhie').execute(message, randomNHIE, message.guild.id, args); // The entire array created at the start.
-      }else if(args[1].toLowerCase() === 'kith' || args[1].toLowerCase() === 'kiss'){
-        client.commands.get('kith').execute(message, args);
+        }else if(args[1].toLowerCase() === 'kith' || args[1].toLowerCase() === 'kiss'){
+          client.commands.get('kith').execute(message, args);
+        }else if(args[1].toLowerCase() === 'pat'){
+          client.commands.get('pat').execute(message, args);
     }else{
         message.react('❌');
         message.channel.send("`Did you type the command correctly? Type '!speshal help' for more info.`");

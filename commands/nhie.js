@@ -22,6 +22,9 @@ module.exports = {
       return;
       }
     }
+    if(global.gameIsRunning[guild]==true){
+      return;
+    }
     if (args[2] == undefined) {
       nquestions = 10;
     } else if (
