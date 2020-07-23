@@ -10,17 +10,7 @@ global.countDrinks = {};
 global.playersPlaying = {};
 
 
-// CANVAS STUFF
-/* global.patgif = [await Canvas.loadImage('./images/pat/frame_0.gif'),
-await Canvas.loadImage('./images/pat/frame_1.gif'),
-await Canvas.loadImage('./images/pat/frame_2.gif'),
-await Canvas.loadImage('./images/pat/frame_3.gif'),
-await Canvas.loadImage('./images/pat/frame_4.gif'),
-await Canvas.loadImage('./images/pat/frame_5.gif'),
-await Canvas.loadImage('./images/pat/frame_6.gif'),
-await Canvas.loadImage('./images/pat/frame_7.gif'),
-await Canvas.loadImage('./images/pat/frame_8.gif'),
-]; */
+client.stats = new Enmap({name: "stats"});
 
 client.commands = new Discord.Collection();
 
@@ -52,11 +42,19 @@ client.on('ready', () => {
     });
 });
 
-client.on('message', msg => {
-  if (msg.content.toLowerCase().includes("!oop")) {
-    console.log(global.countDrinks);
-    console.log(global.playersPlaying);
-    console.log(global.gameIsRunning);
+
+prefix = "!speshal";
+
+client.on('message', message => {
+  if (message.author.bot) return;
+  if (message.guild) {
+    const key = `${message.guild.id}-${message.author.id}`;
+    client.stats.ensure(`${message.guild.id}-${message.author.id}`, {
+      user: message.author.id,
+      guild: message.guild.id,
+      messagesSent: 0
+    });
+    client.stats.math(key, "+", 1, "messagesSent");
   }
 });
 
@@ -65,10 +63,12 @@ client.login(auth.token);
 
 // Start
 
-prefix = "!speshal";
+
 
 client.on("message", (message) => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+    
 
 	const args = message.content.slice(prefix.length).split(/\s+/);
   if(args[1]!=undefined){
@@ -82,10 +82,34 @@ client.on("message", (message) => {
           client.commands.get('kith').execute(message, args);
         }else if(args[1].toLowerCase() === 'pat'){
           client.commands.get('pat').execute(message, args);
+        }else if(args[1].toLowerCase() === 'messages'){
+          const key = `${message.guild.id}-${message.author.id}`;
+          return message.channel.send(`You currently have ${client.stats.get(key, "messagesSent")} messages sent (since 20th July)!`);
+        }else if(args[1].toLowerCase() === "top10") {
+            const filtered = client.stats.filter( p => p.guild === message.guild.id ).array();
+            const sorted = filtered.sort((a, b) => b.messagesSent - a.messagesSent);
+            const top10 = sorted.splice(0, 10);
+            const embed = new Discord.MessageEmbed()
+              .setTitle("Spammers of the Week")
+              .setAuthor(client.user.username, client.user.avatarURL)
+              .setDescription("Top 10 spammers this week...")
+              .setColor(0x00AE86);
+              let i = 1;
+            for(const data of top10) {
+              embed.addField(`#${i}`, `${client.users.cache.get(data.user).tag} - ${data.messagesSent} messages.`);
+              i++;
+            }
+            return message.channel.send({embed});
+          }else if(args[1].toLowerCase() === 'purge'){
+            client.commands.get('purge').execute(message, args);
+            
+        }else if(args[1].toLowerCase() === 'poll'){
+          client.commands.get('poll').execute(message, args);
+        }      
     }else{
         message.react('❌');
         message.channel.send("`Did you type the command correctly? Type '!speshal help' for more info.`");
       }
   }
-});
+);
 
