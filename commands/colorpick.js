@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 module.exports = {
 	name: 'color',
 	description: 'Change my color!',
-	execute(message, args) {
+	execute(message, prefix, args) {
         if(args[2]!=undefined){
         // Checks for keyword 'help'.
         if(args[2].toLowerCase() === 'help'){
@@ -13,7 +13,7 @@ module.exports = {
                 .setDescription('Just another discord bot.')
                 .setThumbnail('https://i.imgur.com/z6pRGtP.png')
                 .addFields(
-                    { name: 'Color Picker!', value: 'Set your own color using hex code eg: `!speshal color #abc123`' },
+                    { name: 'Color Picker!', value: 'Set your own color using hex code eg: `'+prefix+' color #abc123`' },
                     { name: 'Where to find hex codes?', value: 'You can use a website like https://htmlcolorcodes.com/color-picker/ to pick your color! Pick one and copy the hex code "#XXXXXX" and use the command above!' },
                     { name: 'More websites?', value: "You can find them all over with a Google Search, but here's some more: \n https://www.rapidtables.com/web/color/html-color-codes.html \n https://www.colorhexa.com/ \n https://www.w3schools.com/colors/colors_picker.asp" },
                     { name: 'Some preset colors for you...', value: "#FFFFFF - White ⚪\n #FF0000 - Red 🔴\n #00FF00 - Green 💚\n #0000FF - Blue 📘\n #E1FF00 - Yellow 💛\n #FF9100 - Orange 🍊\n #E1A6FF - Pink 🌸" },
@@ -30,7 +30,7 @@ module.exports = {
         if(!res){
             // If the color is not in hexadecimal or wrong do this:
             message.react('❌');
-            message.channel.send("`Specified color ("+args[2]+") is possibly wrong, expected in hex value, eg: #ABC123 or #222FFF. Type '!speshal color help' for more.`");
+            message.channel.send("`Specified color ("+args[2]+") is possibly wrong, expected in hex value, eg: #ABC123 or #222FFF. Type '"+prefix+" color help' for more.`");
             return;
         }
         // Checks if that user has a role already for himself.
@@ -59,7 +59,7 @@ module.exports = {
                 .catch(console.error);
     }}else{
         message.react('❌');
-        message.channel.send("`Did you type the command correctly? Type '!speshal color help' for more info.`");
+        message.channel.send("`Did you type the command correctly? Type '"+prefix+" color help' for more info.`");
         return;
     }},
 };

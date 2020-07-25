@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 module.exports = {
   name: "poll",
   description: "Create a poll!",
-  execute(message, args) {
+  execute(message, prefix, args) {
     if (args[2] != undefined) {
       // Checks for keyword 'help'.
       if (args[2].toLowerCase() === "help") {
@@ -11,7 +11,7 @@ module.exports = {
           .addFields({
             name: "Create a poll!",
             value:
-              "Create a poll eg: ` !speshal poll Do you like huge balloons? \"Yes\" \"No\" \"The bigger the better\"`",
+              "Create a poll eg: ` "+prefix+" poll Do you like huge balloons? \"Yes\" \"No\" \"The bigger the better\"`",
           })
           .setFooter("Speshal Bot - 2020", "https://i.imgur.com/s7CCC6v.png");
         message.channel.send(exampleEmbed);
@@ -80,7 +80,7 @@ module.exports = {
             for (let i = 0; i < choices.length; i++) await m.react(options[i]);
           });
 
-          message.delete();
+          message.delete().catch("No permissions.");
       } else {
         message.channel
           .send("`You have no permission to create polls.`")
@@ -91,7 +91,7 @@ module.exports = {
     } else {
       message.react("❌");
       message.channel.send(
-        "`Did you type the command correctly? Type '!speshal poll help' for more info.`"
+        "`Did you type the command correctly? Type '"+prefix+" poll help' for more info.`"
       );
       return;
     }

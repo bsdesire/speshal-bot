@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 module.exports = {
 	name: 'help',
 	description: 'Speshal Help!',
-	execute(message, args) {
+	execute(message, prefix, args) {
         // Checks for keyword 'help'.
             const exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#54913B')
@@ -11,9 +11,10 @@ module.exports = {
                 .setDescription('Just another discord bot.')
                 .setThumbnail('https://i.imgur.com/z6pRGtP.png')
                 .addFields(
-                    { name: 'Color Picker!', value: 'Color Picker! Type `!speshal color help`' },
-                    { name: 'Speshal Kisses!', value: 'Kisses for everyone! Type `!speshal kith @someone`' },
-                    { name: 'Never have I ever!', value: 'A discord drinking game! Type `!speshal nhie (no. of questions)`' },
+                    { name: 'Color Picker!', value: 'Color Picker! Type `'+prefix+' color help`' },
+                    { name: 'Speshal Kisses!', value: 'Kisses for everyone! Type `'+prefix+' kith @someone`' },
+                    { name: 'Never have I ever!', value: 'A discord drinking game! Type `'+prefix+' nhie (no. of questions)`' },
+                    { name: 'Administration commands!', value: 'Type `'+prefix+' adminhelp` to get a list of admin commands.' },
                     { name: 'Open Source (GitHub)', value: 'This is an open source bot. Feel free to fork the repo. https://github.com/bsdesire/speshal-bot' },
                     { name: 'Where do we go from here?', value: 'More commands to come...' },
                 )

@@ -5,7 +5,7 @@ var fs = require("fs");
 module.exports = {
   name: "nhie",
   description: "Never have I ever...",
-  execute(message, lines, guild, args) {
+  execute(message, lines, guild, prefix, args) {
     let nquestions = 0;
     console.log(guild);
     var listOfAnswered = [];

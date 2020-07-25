@@ -2,14 +2,14 @@ const Discord = require('discord.js');
 module.exports = {
 	name: 'purge',
 	description: 'Purge channel messages!',
-	execute(message, args) {
+	execute(message, prefix, args) {
         if(args[2]!=undefined){
         // Checks for keyword 'help'.
         if(args[2].toLowerCase() === 'help'){
             const exampleEmbed = new Discord.MessageEmbed()
                 .setColor('#54913B')
                 .addFields(
-                    { name: 'Purge messages!', value: 'Purge a number of messages in this channel eg: ` !speshal purge 20 `' },
+                    { name: 'Purge messages!', value: 'Purge a number of messages in this channel eg: ` '+prefix+' purge 20 `' },
                      )
                 .setFooter('Speshal Bot - 2020', 'https://i.imgur.com/s7CCC6v.png');
             message.channel.send(exampleEmbed);
@@ -23,7 +23,7 @@ module.exports = {
         if(!res){
             // If the number specified is NaN or too damn high.
             message.react('❌');
-            message.channel.send("`Did you specify a number? Maybe it was too damn high (1-999). Type '!speshal admin help' for more.`");
+            message.channel.send("`Did you specify a number? Maybe it was too damn high (1-999). Type '"+prefix+" admin help' for more.`");
             return;
         }
         if(message.member.hasPermission('MANAGE_MESSAGES')){
@@ -44,7 +44,7 @@ module.exports = {
         }
     }else{
         message.react('❌');
-        message.channel.send("`Did you type the command correctly? Type '!speshal purge help' for more info.`");
+        message.channel.send("`Did you type the command correctly? Type '"+prefix+" purge help' for more info.`");
         return;
     }},
 };

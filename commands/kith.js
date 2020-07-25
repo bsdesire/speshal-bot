@@ -3,7 +3,7 @@ const Canvas = require('canvas');
 module.exports = {
 	name: 'kith',
 	description: 'Speshal Kith!',
-	async execute(message, args) {
+	async execute(message, prefix, args) {
         if(args[2]!=undefined ){
             const canvas = Canvas.createCanvas(700, 145);
             const ctx = canvas.getContext('2d');
@@ -69,7 +69,7 @@ module.exports = {
                 
     }else{
         message.react('❌');
-        message.channel.send("`Did you type the command correctly? Type '!speshal help' for more info.`");
+        message.channel.send("`Did you type the command correctly? Type '"+prefix+" help' for more info.`");
         return;
     }},
     
