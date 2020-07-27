@@ -107,7 +107,7 @@ client.on("message", (message) => {
           client.commands.get('pat').execute(message, prefix, args);
         }else if(args[1].toLowerCase() === 'messages'){
           const key = `${message.guild.id}-${message.author.id}`;
-          return message.channel.send(`You currently have ${client.stats.get(key, "messagesSent")} messages sent (since 20th July)!`);
+          return message.channel.send(`You currently have ${client.stats.get(key, "messagesSent")} messages sent this week!`);
         }else if(args[1].toLowerCase() === "top10") {
             const filtered = client.stats.filter( p => p.guild === message.guild.id ).array();
             const sorted = filtered.sort((a, b) => b.messagesSent - a.messagesSent);
@@ -119,10 +119,19 @@ client.on("message", (message) => {
               .setColor(0x00AE86);
               let i = 1;
             for(const data of top10) {
-              embed.addField(`#${i}`, `${client.users.cache.get(data.user).tag} - ${data.messagesSent} messages.`);
+              embed.addField(`#${i}`, `<@${data.user}> - ${data.messagesSent} messages.`);
               i++;
             }
+          
             return message.channel.send({embed});
+          }else if(args[1].toLowerCase() === "clearmsgcount") {
+            if (message.member.hasPermission("MANAGE_ROLES")) {
+            const filtered = client.stats.filter( p => p.guild === message.guild.id ).array();      
+            for(const data of filtered) {
+              client.stats.set(message.guild.id+"-"+data.user, 0, "messagesSent");
+            }
+            message.channel.send("Messages cleared for all users.");
+          }
           }else if(args[1].toLowerCase() === 'purge'){
             client.commands.get('purge').execute(message, prefix, args);
             
