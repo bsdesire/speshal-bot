@@ -37,7 +37,7 @@ let randomNHIE = client.commands.get('nhie').readLinesFromFile('./content/nhie.t
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  client.user.setActivity("Type !speshal help");
+  client.user.setActivity("!speshal help");
 
   var allGuilds = client.guilds.cache;
     allGuilds.forEach(function(guild){
