@@ -68,14 +68,37 @@ client.login(auth.token);
 
 // Start
 
-
+client.on("message", message => {
+  if(message.content.startsWith(`!boss`)){ 
+    const bossroll = client.emojis.cache.get("733340133654265936");
+    message.channel.send(`Here he comes.`).then((msg)=> {
+      setTimeout(function(){
+        msg.edit(`Here he comes..`);
+      }, 2000)
+      setTimeout(function(){
+        msg.edit(`Here he comes...`);
+      }, 4000)
+      setTimeout(function(){
+        msg.edit(`${bossroll}`);
+      }, 6000)
+    }); ;
+}});
 
 client.on("message", (message) => {
-
-
+    prefix = "!speshal";
+    if (!message.guild) {
+        prefix = "!speshal";
+        if(message.content.toLowerCase().message.content.startsWith("confess")){
+            const args = message.content.slice(7).split(/\s+/);
+            client.commands.get('confess').execute(message, args, client);
+            
+        }else{
+            return;
+        }
+    }else{
   const guildConf = client.settings.ensure(message.guild.id, guildSettingsDefault); // Ensures that the setting for that guild exist, else it'll create an entry with the default ones.
   prefix = client.settings.get(message.guild.id, "prefix"); // Gets the prefix for that guild (server).
-
+}
 
   // Stats.
   if (message.author.bot) return;
@@ -89,16 +112,33 @@ client.on("message", (message) => {
     client.stats.math(key, "+", 1, "messagesSent");
   }
 
-  if (!message.content.startsWith(prefix)) return;
+  
 
-    
+  if (!message.content.startsWith(prefix) || !message.guild) return;
+  const args = message.content.slice(prefix.length).split(/\s+/);
 
-	const args = message.content.slice(prefix.length).split(/\s+/);
+
+  if(args[1].toLowerCase() === "say"){
+    if (message.member.hasPermission("ADMINISTRATOR")) {
+      const say = args.splice(1,1);
+    //then you could find the channel
+    //https://discord.js.org/#/docs/main/stable/class/ChannelManager?scrollTo=fetch
+    client.channels.fetch('704184314568376405')
+        .then(channel => {
+          channel.send(args.join(" ")) //sending the arguments joined with a space in the fetched channel
+             .then(msg => {setTimeout(function(){msg.delete()},5000)}) //delete after 5 seconds, please check if delete is a function (I didn't)
+        })
+        .catch(console.error);
+    }
+ }
+
+	
   if(args[1]!=undefined){
     if (args[1].toLowerCase() === 'color') {
           client.commands.get('color').execute(message, prefix, args);
         }else if(args[1].toLowerCase() === 'help'){
           client.commands.get('help').execute(message, prefix, args);
+        
         }else if(args[1].toLowerCase() === 'nhie'){
           client.commands.get('nhie').execute(message, randomNHIE, message.guild.id, prefix, args); // The entire array created at the start.
         }else if(args[1].toLowerCase() === 'kith' || args[1].toLowerCase() === 'kiss'){
@@ -192,11 +232,16 @@ client.on("message", (message) => {
               return message.reply("You have no permissions to do this.");
             }
           }
-        else if(args[1].toLowerCase() === 'adminhelp'){
-          if (message.member.hasPermission("ADMINISTRATOR")) {
-            client.commands.get('adminhelp').execute(message, prefix, args);
+          else if(args[1].toLowerCase() === 'adminhelp'){
+            if (message.member.hasPermission("ADMINISTRATOR")) {
+              client.commands.get('adminhelp').execute(message, prefix, args);
+            }
           }
-        }
+          else if(args[1].toLowerCase() === 'amongus'){
+            if (message.member.hasPermission("MUTE_MEMBERS")) {
+              client.commands.get('amongus').execute(message, prefix, args);
+            }
+          }
            
     }else{
         message.react('❌');

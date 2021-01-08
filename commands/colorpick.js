@@ -38,6 +38,7 @@ module.exports = {
         if(message.guild.roles.cache.find(role => role.name === userName) != undefined){
             // If the user does have a role already, sets the new color.
             message.channel.send("`Changing " + message.author.username + "'s color to " + args[2] + "`");
+            message.channel.send("B A S I C");
             message.react('✅');
             message.guild.roles.cache.find(role => role.name === userName).setColor(args[2]).catch(console.error);
             message.member.roles.add(message.guild.roles.cache.find(role => role.name === userName)).catch(console.error);
@@ -45,6 +46,7 @@ module.exports = {
         }else{
             // If the user doesn't have a role yet, creates a role with his id as role name.
             message.channel.send('`Setting ' + message.author.username + "'s color to " + args[2] + "`");
+            message.channel.send("B A S I C");
             message.react('✅');
             console.log(message.guild.roles.highest.position);
             message.guild.roles.create({

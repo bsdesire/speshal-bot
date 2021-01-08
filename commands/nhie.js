@@ -90,7 +90,7 @@ module.exports = {
         let alreadyReacted = [];
 
         const collector = sentenceEmbed.createReactionCollector(filter, {
-          time: 30000,
+          time: 15000,
         });
 
         collector.on("collect", (reaction, user) => {
@@ -151,7 +151,7 @@ module.exports = {
       if (global.gameIsRunning[guild]) {
         // Increases question number.
         i++;
-        setTimeout(newQuestion, 60000);
+        setTimeout(newQuestion, 40000);
       }
     }, delay);
 
