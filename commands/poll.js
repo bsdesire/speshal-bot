@@ -75,7 +75,7 @@ module.exports = {
           .setDescription(content);
 
         message.channel
-          .send(`:bar_chart: ${message.guild.name} started a poll.`, embed)
+          .send(`:bar_chart: ${message.guild.name}'s user ${message.member} started a poll.`, embed)
           .then(async (m) => {
             for (let i = 0; i < choices.length; i++) await m.react(options[i]);
           });

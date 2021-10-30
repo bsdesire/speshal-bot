@@ -5,13 +5,18 @@
     "main": "bot.js",
     "author": "Carlos P.",
     "dependencies": {
+        "async": "^3.2.1",
         "better-sqlite3": "^7.1.0",
-        "canvas": "^2.6.1",
-        "canvas-gif-encoder": "^0.1.2",
+        "canvas": "^2.8.0",
+        "cheerio": "^1.0.0-rc.10",
+        "discord-buttons": "^4.0.0",
         "discord.js": "^12.2.0",
         "enmap": "^5.3.1",
+        "gif-encoder-2": "^1.0.5",
         "gifler": "^0.1.0",
         "jquery": "^3.5.1",
-        "jsdom": "^16.2.2"
+        "jsdom": "^16.2.2",
+        "request": "^2.88.2",
+        "torrent-search-api": "^2.1.4"
     }
 }

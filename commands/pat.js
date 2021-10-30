@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const Canvas = require('canvas');
 const fs = require('fs');
-const CanvasGifEncoder = require('canvas-gif-encoder');
+const CanvasGifEncoder = require('gif-encoder-2');
 const { Readable } = require('stream');
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
                 this._paused = false;
               }
 
-            encoder.begin();
+            encoder.start();
             ctx.lineWidth = 3;
             ctx.strokeStyle = "white";
 
